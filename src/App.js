@@ -7,6 +7,7 @@ class App extends Component {
       <div className="app">
         <h1>Class Front</h1>
         <Sum/>
+        <Sum/>
       </div>
     );
   }
