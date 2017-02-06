@@ -46,9 +46,4 @@ describe('Box', () => {
     wrapper.find('.box > div').simulate('click');
     expect(stub.callCount).to.equal(1);
   });
-
-  // it('should get the html from component', () => {
-  //   const wrapper = shallow(<Sum />);
-  //   expect(wrapper.html()).to.equal('<div class="sum"><h1>Sum</h1><input type="number" class="a"/><button>+</button><input type="number" class="b"/><span></span></div>');
-  // });
 })
