@@ -47,52 +47,56 @@ describe('List', () => {
     const wrapper = mount(<CreateKlass />);
     wrapper.find('input').get(0).value = '';
     wrapper.find('button').simulate('click');
-    expect(wrapper.state('error')).to.equal('Name too short');
+    expect(wrapper.state('error')).to.equal('klass fields or field are too short');
   });
-  //
-  // it('should create a student', (done) => {
-  //   nock('http://fakehost.com')
-  //   .post('/students', {email: 'sara@aol.com'})
-  //   .reply(200, {id: 99, email: 'sara@aol.com'});
-  //
-  //   const stub = sinon.stub();
-  //
-  //   const wrapper = mount(<CreateStudent host="http://fakehost.com" created={stub} />);
-  //   wrapper.find('input').get(0).value = 'sara@aol.com';
-  //   wrapper.find('button').simulate('click');
-  //
-  //   setTimeout(() => {
-  //     try{
-  //       expect(stub.callCount).to.equal(1);
-  //       expect(stub.getCall(0).args[0]).to.deep.equal({id: 99, email: 'sara@aol.com'});
-  //       expect(wrapper.find('input').get(0).value).to.equal('');
-  //       done();
-  //     }catch(e){
-  //       done.fail(e);
-  //     }
-  //   }, 1000);
-  // });
-  //
-  // it('should show server exploding', (done) => {
-  //   nock('http://fakehost.com')
-  //   .post('/students', {email: 'sara@aol.com'})
-  //   .replyWithError('server just exploded');
-  //
-  //   const stub = sinon.stub();
-  //
-  //   const wrapper = mount(<CreateStudent host="http://fakehost.com" created={stub} />);
-  //   wrapper.find('input').get(0).value = 'sara@aol.com';
-  //   wrapper.find('button').simulate('click');
-  //
-  //   setTimeout(() => {
-  //     try{
-  //       expect(stub.callCount).to.equal(0);
-  //       expect(wrapper.find('input').get(0).value).to.equal('sara@aol.com');
-  //       expect(wrapper.state('error')).to.equal('server just exploded');
-  //       done();
-  //     }catch(e){
-  //       done.fail(e);
-  //     }
-  //   }, 1000);
-  // });
+
+
+  it('should create a klass', (done) => {
+    nock('http://fakehost.com')
+    .post('/klasses', {name: 'vinit', semester: '2017/02/02', credits: '4'})
+    .reply(200, {id: 99, name: 'vinit', semester: '2017/02/02', credits: '4'});
+
+    const stub = sinon.stub();
+
+    const wrapper = mount(<CreateKlass host="http://fakehost.com" created={stub} />);
+    wrapper.find('input').get(0).value = 'vinit';
+    wrapper.find('input').get(1).value = '2017/02/02';
+    wrapper.find('input').get(2).value = '4';
+    wrapper.find('button').simulate('click');
+
+    setTimeout(() => {
+      try{
+        expect(stub.callCount).to.equal(1);
+        expect(stub.getCall(0).args[0]).to.deep.equal({id: 99, name: 'vinit', semester: '2017/02/02',credits: '4'});
+        expect(wrapper.find('input').get(0).value).to.equal('vinit');
+        expect(wrapper.find('input').get(1).value).to.equal('2017/02/02');
+        done();
+      }catch(e){
+        done.fail(e);
+      }
+    }, 1000);
+  });
+
+  it('should show server exploding', (done) => {
+    nock('http://fakehost.com')
+    .post('/klasses', {name: 'swapnil'})
+    .replyWithError('server just exploded');
+
+    const stub = sinon.stub();
+
+    const wrapper = mount(<CreateKlass host="http://fakehost.com" created={stub} />);
+    wrapper.find('input').get(0).value = 'swapnil';
+    wrapper.find('button').simulate('click');
+
+    setTimeout(() => {
+      try{
+        expect(stub.callCount).to.equal(0);
+        expect(wrapper.find('input').get(0).value).to.equal('swapnil');
+        expect(wrapper.state('error')).to.equal('server just exploded');
+        done();
+      }catch(e){
+        done.fail(e);
+      }
+    }, 1000);
+  });
 });

@@ -5,7 +5,7 @@ import './CreateKlass.css';
 export default class CreateKlass extends React.Component{
   constructor(props){
     super(props);
-    this.state = {value: 'Science'};
+    this.state = {value: 'SCIENCE'};
     this.create = this.create.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -25,17 +25,16 @@ export default class CreateKlass extends React.Component{
 
       //validations
       if(name.length==0){
-        this.setState({error: "Name too short"});
+        this.setState({error: "klass fields or field are too short"});
         return;
       }
-
       const url = this.props.host + '/klasses';
       const payload = {name, semester, credits, department, fee};
       axios.post(url, payload)
       .then(rsp => {
-        const klass = rsp.data;
-        console.log('klass :', klass);
-        this.props.created(klass); // this is the function passed in the props
+        const klassData = rsp.data;
+        console.log('klass :', klassData);
+        this.props.created(klassData); // this is the function passed in the props
       }).catch(e => this.setState({error: e.message}));
   }
 
@@ -57,7 +56,7 @@ export default class CreateKlass extends React.Component{
             <select value={this.state.value} onChange={this.handleChange}>
               <option value="SCIENCE">Science</option>
               <option value="ENGINEERING">Engineering</option>
-              <option value="LITERATURE">Litrature</option>
+              <option value="LITERATURE">Literature</option>
               <option value="PHILOSOPHY">Philosophy</option>
             </select>
             <br/>
