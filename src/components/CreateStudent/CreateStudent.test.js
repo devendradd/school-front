@@ -72,4 +72,28 @@ describe('List', () => {
       }
     }, 1000);
   });
+
+  it('should show server exploding', (done) => {
+    nock('http://fakehost.com')
+    .post('/students', {email: 'sara@aol.com'})
+    .replyWithError('server just exploded');
+
+    const stub = sinon.stub();
+
+    const wrapper = mount(<CreateStudent host="http://fakehost.com" created={stub} />);
+    wrapper.find('input').get(0).value = 'sara@aol.com';
+    wrapper.find('button').simulate('click');
+
+    setTimeout(() => {
+      try{
+        expect(stub.callCount).to.equal(0);
+        expect(wrapper.find('input').get(0).value).to.equal('sara@aol.com');
+        expect(wrapper.state('error')).to.equal('server just exploded');
+        done();
+      }catch(e){
+        done.fail(e);
+      }
+    }, 1000);
+  });
+
 });
