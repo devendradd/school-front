@@ -23,16 +23,19 @@ export default class CreateKlass extends React.Component{
       const department = this.state.value;
       const fee = this.fees.value;
 
-            
+      //validations
+      if(name.length==0){
+        this.setState({error: "Name too short"});
+        return;
+      }
+
       const url = this.props.host + '/klasses';
       const payload = {name, semester, credits, department, fee};
-      console.log('payload=============',payload);
       axios.post(url, payload)
       .then(rsp => {
         const klass = rsp.data;
         console.log('klass :', klass);
-        // this.props.created(student); // this is the function passed in the props
-        // this.email.value = '';
+        this.props.created(klass); // this is the function passed in the props
       }).catch(e => this.setState({error: e.message}));
   }
 
