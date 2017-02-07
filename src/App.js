@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Sum from './components/Sum/sum';
 import CreateStudent from './components/CreateStudent/CreateStudent';
+import CreateKlass from './components/CreateKlass/CreateKlass';
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
       <div className="app">
         <h1>Class Front</h1>
         <CreateStudent host='http://localhost:9000'/>
+        <CreateKlass host='http://localhost:9000'/>
       </div>
     );
   }
